@@ -1,4 +1,5 @@
-# Project Title: **IndoorOfTower(IoT)**<br>
+# Project Title: **IndoorOfTower(IoT)**
+***
 ## **Team Name**    
 team name
 ***
@@ -11,7 +12,7 @@ team name
 ***
 ## **Member Information & Role**<br>
 * _201935015 Kim dongkwan_ `Role: `
-* _name_ `Role: `
+* _201935049 Park euijune_ `Role: `
 * _name_ `Role: `
 * _name_ `Role: `
 * _name_ `Role: `
