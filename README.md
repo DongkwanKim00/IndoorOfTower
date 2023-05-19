@@ -15,8 +15,8 @@ team name
 
 ***
 ## **Member Information & Role**<br>
-* _201935015 Kim dongkwan_ `Role: `
-* _201935049 Park euijune_ `Role: `
+* _201935015 Kim Dongkwan_ `Role: `
+* _201935049 Park Euijune_ `Role: `
 * _201933646 Yang Soyoung_ `Role: `
 * _name_ `Role: `
 * _name_ `Role: `
