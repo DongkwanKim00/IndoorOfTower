@@ -19,4 +19,4 @@ team name
 * _201935049 Park Euijune_ `Role: `
 * _201933646 Yang Soyoung_ `Role: `
 * _201835424 Kim Sejung_ `Role: `
-* _name_ `Role: `
+* _201835448 Moon Dongseong_ `Role: `
