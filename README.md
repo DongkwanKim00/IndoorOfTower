@@ -15,8 +15,8 @@ team name
 
 ***
 ## **Member Information & Role**<br>
-* _201935015 Kim Dongkwan_ `Role: `
-* _201935049 Park Euijune_ `Role: `
-* _201933646 Yang Soyoung_ `Role: `
-* _201835424 Kim Sejung_ `Role: `
-* _201835448 Moon Dongseong_ `Role: `
+* _201935015 Kim Dongkwan_ `Role: User App & FingerPrint`
+* _201935049 Park Euijune_ `Role: Admin App & FingerPrint`
+* _201933646 Yang Soyoung_ `Role: Remote Server & FingerPrint`
+* _201835424 Kim Sejung_ `Role: Admin App & FingerPrint`
+* _201835448 Moon Dongseong_ `Role: User App & FingerPrint`
