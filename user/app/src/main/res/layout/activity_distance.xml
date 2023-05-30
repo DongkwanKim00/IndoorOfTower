@@ -6,6 +6,7 @@
     android:gravity="center"
     android:padding="16dp">
 
+<!--    맨해튼 거리 출력-->
     <TextView
         android:id="@+id/distanceTextView"
         android:layout_width="wrap_content"
@@ -14,6 +15,18 @@
         android:textColor="@android:color/black"
         android:textStyle="bold"
         tools:text="Manhattan Distance: 0" />
+
+<!--이 부분이 방향 띄우는 부분입니다.-->
+    <TextView
+        android:id="@+id/directionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Direction"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+
+    />
+
 
     <!-- Add other UI elements or customize the layout as needed -->
 
