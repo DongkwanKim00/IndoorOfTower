@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1000908669294",
+    "project_id": "indoorpositioning-b094c",
+    "storage_bucket": "indoorpositioning-b094c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000908669294:android:d7331ee47212fbc51b017f",
+        "android_client_info": {
+          "package_name": "com.talentica.wifiindoorpositioning.wifiindoorpositioning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000908669294-76b6i19t0u8jeh6urb7rddjefkrs9v51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.talentica.wifiindoorpositioning.wifiindoorpositioning",
+            "certificate_hash": "e95803552ebfc2c1b607ac408a1680e5a77b8b50"
+          }
+        },
+        {
+          "client_id": "1000908669294-f3e09m9k2r9h116fv6inkih978vs53j0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi2zFQ3MiTzqnLeaR4cKqzc4X7qcXHMmk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000908669294-f3e09m9k2r9h116fv6inkih978vs53j0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
