@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "34101454880",
+    "firebase_url": "https://indooroftower-7da12-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "indooroftower-7da12",
+    "storage_bucket": "indooroftower-7da12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34101454880:android:fb0741325371ed8a66b445",
+        "android_client_info": {
+          "package_name": "com.gachon.indooroftower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "34101454880-6kou69mq7abjib92pp33khis8dt5v7og.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtgVbU7hdPWs3NtoQgwMuPQ3XqJocgWUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "34101454880-6kou69mq7abjib92pp33khis8dt5v7og.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
