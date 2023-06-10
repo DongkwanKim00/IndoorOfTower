@@ -18,10 +18,14 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends Activity {
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -33,7 +37,8 @@ public class MainActivity extends Activity {
     private Button addButton;
     private LinearLayout wifiListLayout;
 
-    private DatabaseReference databaseReference;
+    private FirebaseFirestore db;
+    private CollectionReference dataCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +52,9 @@ public class MainActivity extends Activity {
         addButton = findViewById(R.id.addButton);
         wifiListLayout = findViewById(R.id.wifiListLayout);
 
-        // Initialize Firebase Realtime Database
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        // Firebase Firestore 초기화
+        db = FirebaseFirestore.getInstance();
+        dataCollection = db.collection("data");
 
         measureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +70,7 @@ public class MainActivity extends Activity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadDataToFirebase();
+                uploadDataToFirestore();
             }
         });
     }
@@ -85,7 +91,7 @@ public class MainActivity extends Activity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 measureWiFi();
             } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "권한이 거부되었습니다", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -95,17 +101,10 @@ public class MainActivity extends Activity {
         String xCoordinate = xCoordinateInput.getText().toString();
         String yCoordinate = yCoordinateInput.getText().toString();
 
-        // Do your WiFi scanning and measurement logic here
+        // WiFi 스캐닝 및 측정 로직 수행
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.startScan();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         List<ScanResult> wifiList = wifiManager.getScanResults();
@@ -122,12 +121,12 @@ public class MainActivity extends Activity {
             String ssid = result.SSID;
 
             TextView textView = new TextView(this);
-            textView.setText("SSID: " + ssid+ "\nBSSID: " + bssid +"\nRSSI: " + rssi  );
+            textView.setText("SSID: " + ssid + "\nBSSID: " + bssid + "\nRSSI: " + rssi);
 
             wifiListLayout.addView(textView);
         }
 
-        // Scroll to the bottom of the list
+        // 스크롤을 리스트의 가장 아래로 이동
         ScrollView scrollView = findViewById(R.id.scrollView);
         scrollView.post(new Runnable() {
             public void run() {
@@ -136,44 +135,51 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void uploadDataToFirebase() {
+    private void uploadDataToFirestore() {
         String key = textInput.getText().toString();
         String xCoordinate = xCoordinateInput.getText().toString();
         String yCoordinate = yCoordinateInput.getText().toString();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         List<ScanResult> wifiList = ((WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE)).getScanResults();
 
-        // Create a new child node in the Firebase database with the key as the value of the first text box
-        DatabaseReference childRef = databaseReference.child(key);
+        // 첫 번째 텍스트 상자의 값을 키로 사용하여 새 문서 생성
+        DocumentReference documentRef = dataCollection.document(key);
 
-        // Set the values to the child node
-        childRef.child("roomNumber").setValue(key);
-        childRef.child("xCoordinate").setValue(xCoordinate);
-        childRef.child("yCoordinate").setValue(yCoordinate);
+        // 값을 설정하기 위한 데이터 객체 생성
+        Map<String, Object> data = new HashMap<>();
+        data.put("roomNumber", key);
+        data.put("xCoordinate", xCoordinate);
+        data.put("yCoordinate", yCoordinate);
 
-        // Upload the Wi-Fi information as a separate child node
-        DatabaseReference wifiRef = childRef.child("wifiList");
+        // 값들을 문서에 설정
+        documentRef.set(data)
+                .addOnSuccessListener(aVoid -> {
+                    // 문서 저장 성공
+                    uploadWiFiListToFirestore(documentRef, wifiList);
+                    Toast.makeText(this, "데이터가 Firestore에 업로드되었습니다", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    // 에러 처리
+                    Toast.makeText(this, "Firestore에 데이터 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void uploadWiFiListToFirestore(DocumentReference documentRef, List<ScanResult> wifiList) {
+        CollectionReference wifiCollectionRef = documentRef.collection("wifiList");
+
         for (ScanResult result : wifiList) {
             String rssi = String.valueOf(result.level);
             String bssid = result.BSSID;
             String ssid = result.SSID;
 
-            DatabaseReference wifiChildRef = wifiRef.child(ssid);
-            wifiChildRef.child("ssid").setValue(ssid);
-            wifiChildRef.child("bssid").setValue(bssid);
-            wifiChildRef.child("rssi").setValue(rssi);
+            Map<String, Object> wifiData = new HashMap<>();
+            wifiData.put("ssid", ssid);
+            wifiData.put("bssid", bssid);
+            wifiData.put("rssi", rssi);
 
+            wifiCollectionRef.document(ssid).set(wifiData);
         }
-
-        Toast.makeText(this, "Data uploaded to Firebase", Toast.LENGTH_SHORT).show();
     }
 }
