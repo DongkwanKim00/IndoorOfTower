@@ -125,7 +125,11 @@ package com.gachon.indooroftower;
 //}
 
 
+import android.net.wifi.ScanResult;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +147,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.opencsv.CSVParser;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -150,7 +158,7 @@ import org.apache.commons.csv.CSVRecord;
 public class ReadAPData {
 
     public static void main(String[] args) {
-        String csvFilePath = "/path/to/AP_c.csv";  // Replace with your CSV file path
+        String csvFilePath = "/AP.csv";  // Replace with your CSV file path
 
         try (FileReader fileReader = new FileReader(csvFilePath);
              CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(fileReader)) {
@@ -181,8 +189,15 @@ public class ReadAPData {
 }
 
 public class KNNLocationFinder {
+    private static List<ScanResult> scanResults; //5초마다 내 주변 wifi정보 리스트 넘겨받는 변수
+
+    public KNNLocationFinder(List<ScanResult> scanResults) {
+        this.scanResults = scanResults;
+    }
 
     public static void main(String[] args) throws Exception {
+
+
         // Reference point data
         Map<String, Map<String, Double>> referencePoints = new HashMap<>();
         referencePoints.put("RP1", createAPData(1, 2, -60, -70, -80));
@@ -191,7 +206,20 @@ public class KNNLocationFinder {
         // Add more reference points as needed
 
         // AP data for the location to be found
-        Map<String, Double> locationData = createAPData(0, 0, -62, -73, -82);
+        List<ScanResult> top3ScanResults = new ArrayList<>();
+        Collections.sort(scanResults, new Comparator<ScanResult>() {
+            @Override
+            public int compare(ScanResult result1, ScanResult result2) {
+                return Integer.compare(result2.level, result1.level);
+            }
+        });
+        // Retrieve the top 3 scan results
+        int count = Math.min(3, scanResults.size());
+        for (int i = 0; i < count; i++) {
+            top3ScanResults.add(scanResults.get(i));
+        }
+        //5초마다 넘겨오는 내 위치 주변 wifi에서 rssi값 가장 센 3개. 일단 x,y좌표 무시하고 진행.
+        Map<String, Double> locationData = createAPData(0, 0, top3ScanResults.get(0).level, top3ScanResults.get(1).level, top3ScanResults.get(2).level);
 
         // Prepare the training data
         List<Attribute> attributes = new ArrayList<>();
@@ -244,4 +272,5 @@ public class KNNLocationFinder {
         Map<String, Double> apData = new HashMap<>();
         apData.put("AP1", ap1);
         apData.put("AP2", ap2);
-        apData
+    }
+}

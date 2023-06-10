@@ -37,7 +37,7 @@ import java.util.Map;
 public class SecondActivity extends AppCompatActivity {
 
     private TextView wifiTextView;
-    int number;
+    int number; //사용자가 401호를 누르면 이 변수에 숫자 401이 저장됨. 네비게이션 구현할 때 목적지로 사용.
     String numberString;
     TextView wifiList;
 
@@ -114,146 +114,153 @@ public class SecondActivity extends AppCompatActivity {
 
         // 스캔 결과 가져오기
         List<ScanResult> scanResults = wifiManager.getScanResults();
+        System.out.println(scanResults);
+        //KNNLocationFinder knnLocalization = new KNNLocationFinder(scanResults);
+
+
+
+
+
 
         // 모든 AP 정보 표시
-        StringBuilder wifiInfoBuilder = new StringBuilder();
-        for (ScanResult scanResult : scanResults) {
-            String ssid = scanResult.SSID;
-            String bssid = scanResult.BSSID;
-            int rssi = scanResult.level;
-
-            wifiInfoBuilder.append("SSID: ").append(ssid).append("\n")
-                    .append("BSSID: ").append(bssid).append("\n")
-                    .append("RSSI: ").append(rssi).append("\n\n");
-        }
+//        StringBuilder wifiInfoBuilder = new StringBuilder();
+//        for (ScanResult scanResult : scanResults) {
+//            String ssid = scanResult.SSID;
+//            String bssid = scanResult.BSSID;
+//            int rssi = scanResult.level;
+//
+//            wifiInfoBuilder.append("SSID: ").append(ssid).append("\n")
+//                    .append("BSSID: ").append(bssid).append("\n")
+//                    .append("RSSI: ").append(rssi).append("\n\n");
+//        }
 
 //        wifiTextView.setText(wifiInfoBuilder.toString());
 
         // Toast 메시지 표시
-        toastNumber++; // 숫자 증가
-        Toast.makeText(this, "와이파이 정보 불러오기: " + toastNumber + "번째", Toast.LENGTH_SHORT).show();
+//        toastNumber++; // 숫자 증가
+//        Toast.makeText(this, "와이파이 정보 불러오기: " + toastNumber + "번째", Toast.LENGTH_SHORT).show();
 
-        prefixKey = numberString;
+        //prefixKey = numberString;
 
-        fetchDataFromFirebase();
+        //fetchDataFromFirebase();
     }
 
 
 
-    private void fetchDataFromFirebase() {
-
+//    private void fetchDataFromFirebase() {
+//
+////        Query query = databaseReference.orderByKey().startAt(prefixKey).endAt(prefixKey + "\uf8ff");
 //        Query query = databaseReference.orderByKey().startAt(prefixKey).endAt(prefixKey + "\uf8ff");
-        Query query = databaseReference.orderByKey().startAt(prefixKey).endAt(prefixKey + "\uf8ff");
-        query.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                List<DataItem> dataItems = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
-                    DataItem temp = dataSnapshot.getValue(DataItem.class);
-                    dataItems.add(temp);
-                }
-                // dataItems 리스트를 사용하여 필요한 작업을 수행하세요
-                System.out.println("@@@@@@@@@@@@@@@@@@@ "+ dataItems.toString());
-            } else {
-                Exception exception = task.getException();
-                if (exception != null) {
-                    // 오류 처리
-                }
-            }
-        });
-    }
-
-    public class DataItem {
-        private String roomNumber;
-        private Map<String, WifiData> wifiList;
-        private String xCoordinate;
-        private String yCoordinate;
-
-        // Empty constructor (required for Firebase)
-        public DataItem() {
-        }
-
-        public DataItem(String roomNumber, Map<String, WifiData> wifiList, String xCoordinate, String yCoordinate) {
-            this.roomNumber = roomNumber;
-            this.wifiList = wifiList;
-            this.xCoordinate = xCoordinate;
-            this.yCoordinate = yCoordinate;
-        }
-
-        // Getter and Setter methods
-
-        public String getRoomNumber() {
-            return roomNumber;
-        }
-
-        public void setRoomNumber(String roomNumber) {
-            this.roomNumber = roomNumber;
-        }
-
-        public Map<String, WifiData> getWifiList() {
-            return wifiList;
-        }
-
-        public void setWifiList(Map<String, WifiData> wifiList) {
-            this.wifiList = wifiList;
-        }
-
-        public String getXCoordinate() {
-            return xCoordinate;
-        }
-
-        public void setXCoordinate(String xCoordinate) {
-            this.xCoordinate = xCoordinate;
-        }
-
-        public String getYCoordinate() {
-            return yCoordinate;
-        }
-
-        public void setYCoordinate(String yCoordinate) {
-            this.yCoordinate = yCoordinate;
-        }
-    }
-
-    public class WifiData {
-        private String bssid;
-        private String rssi;
-        private String ssid;
-
-        public WifiData() {
-        }
-
-        public WifiData(String bssid, String rssi, String ssid) {
-            this.bssid = bssid;
-            this.rssi = rssi;
-            this.ssid = ssid;
-        }
-
-        // Getter and Setter methods
-
-        public String getBssid() {
-            return bssid;
-        }
-
-        public void setBssid(String bssid) {
-            this.bssid = bssid;
-        }
-
-        public String getRssi() {
-            return rssi;
-        }
-
-        public void setRssi(String rssi) {
-            this.rssi = rssi;
-        }
-
-        public String getSsid() {
-            return ssid;
-        }
-
-        public void setSsid(String ssid) {
-            this.ssid = ssid;
-        }
-    }
+//        query.get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                List<DataItem> dataItems = new ArrayList<>();
+//                for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+//                    DataItem temp = dataSnapshot.getValue(DataItem.class);
+//                    dataItems.add(temp);
+//                }
+//                // dataItems 리스트를 사용하여 필요한 작업을 수행하세요
+//                System.out.println("@@@@@@@@@@@@@@@@@@@ "+ dataItems.toString());
+//            } else {
+//                Exception exception = task.getException();
+//                if (exception != null) {
+//                    // 오류 처리
+//                }
+//            }
+//        });
+//    }
+//
+//    public class DataItem {
+//        private String roomNumber;
+//        private Map<String, WifiData> wifiList;
+//        private String xCoordinate;
+//        private String yCoordinate;
+//
+//        // Empty constructor (required for Firebase)
+//        public DataItem() {
+//        }
+//
+//        public DataItem(String roomNumber, Map<String, WifiData> wifiList, String xCoordinate, String yCoordinate) {
+//            this.roomNumber = roomNumber;
+//            this.wifiList = wifiList;
+//            this.xCoordinate = xCoordinate;
+//            this.yCoordinate = yCoordinate;
+//        }
+//
+//        // Getter and Setter methods
+//
+//        public String getRoomNumber() {
+//            return roomNumber;
+//        }
+//
+//        public void setRoomNumber(String roomNumber) {
+//            this.roomNumber = roomNumber;
+//        }
+//
+//        public Map<String, WifiData> getWifiList() {
+//            return wifiList;
+//        }
+//
+//        public void setWifiList(Map<String, WifiData> wifiList) {
+//            this.wifiList = wifiList;
+//        }
+//
+//        public String getXCoordinate() {
+//            return xCoordinate;
+//        }
+//
+//        public void setXCoordinate(String xCoordinate) {
+//            this.xCoordinate = xCoordinate;
+//        }
+//
+//        public String getYCoordinate() {
+//            return yCoordinate;
+//        }
+//
+//        public void setYCoordinate(String yCoordinate) {
+//            this.yCoordinate = yCoordinate;
+//        }
+//    }
+//
+//    public class WifiData {
+//        private String bssid;
+//        private String rssi;
+//        private String ssid;
+//
+//        public WifiData() {
+//        }
+//
+//        public WifiData(String bssid, String rssi, String ssid) {
+//            this.bssid = bssid;
+//            this.rssi = rssi;
+//            this.ssid = ssid;
+//        }
+//
+//        // Getter and Setter methods
+//
+//        public String getBssid() {
+//            return bssid;
+//        }
+//
+//        public void setBssid(String bssid) {
+//            this.bssid = bssid;
+//        }
+//
+//        public String getRssi() {
+//            return rssi;
+//        }
+//
+//        public void setRssi(String rssi) {
+//            this.rssi = rssi;
+//        }
+//
+//        public String getSsid() {
+//            return ssid;
+//        }
+//
+//        public void setSsid(String ssid) {
+//            this.ssid = ssid;
+//        }
+//    }
 
 }
 
