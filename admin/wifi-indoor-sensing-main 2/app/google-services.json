@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "980732668560",
+    "firebase_url": "https://indoor-navigation-3e134-default-rtdb.firebaseio.com",
+    "project_id": "indoor-navigation-3e134",
+    "storage_bucket": "indoor-navigation-3e134.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980732668560:android:24f324168639e8dd680615",
+        "android_client_info": {
+          "package_name": "com.talentica.wifiindoorpositioning.wifiindoorpositioning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980732668560-fdpcj9lqusgq21neb5gqlhuun3on1fjv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.talentica.wifiindoorpositioning.wifiindoorpositioning",
+            "certificate_hash": "0fed368e0c500466bb9bfdace3af45f021dec7c5"
+          }
+        },
+        {
+          "client_id": "980732668560-2appt1a13q180p0cpl57tusk61f3tf5t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBcUqMtakLa4AaYTW8HFUvDoVDQUlHVFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980732668560-2appt1a13q180p0cpl57tusk61f3tf5t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
