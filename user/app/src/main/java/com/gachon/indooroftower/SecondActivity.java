@@ -142,6 +142,7 @@ public class SecondActivity extends AppCompatActivity {
 
     private void fetchDataFromFirebase() {
 
+//        Query query = databaseReference.orderByKey().startAt(prefixKey).endAt(prefixKey + "\uf8ff");
         Query query = databaseReference.orderByKey().startAt(prefixKey).endAt(prefixKey + "\uf8ff");
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
