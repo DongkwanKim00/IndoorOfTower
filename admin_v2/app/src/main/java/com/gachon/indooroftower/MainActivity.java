@@ -176,3 +176,15 @@ public class MainActivity extends Activity {
     }
 
 }
+
+
+//----------------------------admin function-------------------------
+// adding reference point
+//1. reference point의 넘버링
+//2. 검색된 mac주소와 rssi신호를 데이터 베이스의 ap데이터의 맥주소로 검색하여 저장
+//2-1) mac주소 검색
+//2-2) 데이터베이스의 ap 맥주소 와 매칭
+//2-3) 데이터베이스의 rp에
+//      1. 이름 : 위치 넘버,
+//      2. 위치 넘버에 해당하는 x, y좌표
+//      3. 맥주소(ap데이터에서 해당 맥주소로 검색해서 연결)와 rssi신호 저장 -> ap데이터에 있는 하위 ap정보가 rp에서 맥주소로 검색할 때 검색되어야 함

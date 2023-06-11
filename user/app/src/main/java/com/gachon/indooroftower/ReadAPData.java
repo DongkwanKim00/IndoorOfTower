@@ -244,4 +244,24 @@ public class KNNLocationFinder {
         Map<String, Double> apData = new HashMap<>();
         apData.put("AP1", ap1);
         apData.put("AP2", ap2);
-        apData
+        apData.put("AP3", ap3);
+        return apData;
+
+    }
+ }
+//loction function  knn.setKNN(3);  // 여기서 3을 변수로 설정 3-->n
+// 레퍼런스 포인트에서 해당하는 방의 rssi신호 ap개수를 n개로 결정함 -> reference point에서 put할때와, createAP데이터에서 rssi신호를 n번째만큼 불러와야함
+
+// 1. referencePoints에 referencePoints.put("RP의 넘버 이름", createAPData(x좌표, y좌표, 가장 가까운 ap의 rssi신호 {ap 맥주소:rssi신호}, 2번째 rssi신호, ..));//여기서 rssi신호를 mac주소와 매칭해서 수정해야함 해당 ap맥주소도 추가
+// --> 신호를 불러올때 n개로 데이터베이스에서 바로 구성할 수있게 쿼리를 만들어야함
+
+// 2. locationData에 locateMe를 할때  createAPData(무시, 무시, 가장 가까운 ap의 rssi신호 {ap 맥주소: rssi신호}, 2번째, 3번째 ...);
+//apData에 들어갈 어트리뷰트도 마찬가지로 n개로 생성할수있어야함, user앱에서 검색된 ap가 데이터 베이스에 있는 ap데이터의 맥주소에서 검색되어야함
+//
+//3. predictedLocation[0]은 현재위치의 x좌표, predictedLocation[1]은 y좌표
+
+//navigation function
+// 1. 장소를 맵뷰를 이용해서 누르면 x와 y좌표를 통해 현재 내위치와 해당 방의 맨해튼 거리 계산
+// 2. gps 를 이용해 초기 방향 결정
+// 3. k초 만큼 내위치 업데이트 (아니면 위치 업데이트가 아니라 대강 이정도 움직였다는 가정하에 다음 방향 안내 // )업데이트된 위치의 ap주소로 가장 가까운 방과 매칭하여 앞으로 몇번의 방이 남았는지 탐색
+// 4. 목적치 도착 안내
