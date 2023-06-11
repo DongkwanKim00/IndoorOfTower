@@ -244,4 +244,6 @@ public class KNNLocationFinder {
         Map<String, Double> apData = new HashMap<>();
         apData.put("AP1", ap1);
         apData.put("AP2", ap2);
-        apData
+        apData.put("AP3", ap3);
+        retrun apData;
+    }}}
