@@ -135,37 +135,6 @@ public class MainActivity extends Activity {
         });
     }
 
-//    private void uploadDataToFirestore() {
-//        String key = textInput.getText().toString();
-//        String xCoordinate = xCoordinateInput.getText().toString();
-//        String yCoordinate = yCoordinateInput.getText().toString();
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        List<ScanResult> wifiList = ((WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE)).getScanResults();
-//
-//        // 첫 번째 텍스트 상자의 값을 키로 사용하여 새 문서 생성
-//        DocumentReference documentRef = dataCollection.document(key);
-//
-//        // 값을 설정하기 위한 데이터 객체 생성
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("roomNumber", key);
-//        data.put("xCoordinate", xCoordinate);
-//        data.put("yCoordinate", yCoordinate);
-//
-//        // 값들을 문서에 설정
-//        documentRef.set(data)
-//                .addOnSuccessListener(aVoid -> {
-//                    // 문서 저장 성공
-//                    uploadWiFiListToFirestore(documentRef, wifiList);
-//                    Toast.makeText(this, "데이터가 Firestore에 업로드되었습니다", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(e -> {
-//                    // 에러 처리
-//                    Toast.makeText(this, "Firestore에 데이터 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
-//                });
-//    }
-
     private void uploadDataToFirestore() {
         String key = textInput.getText().toString();
         String xCoordinate = xCoordinateInput.getText().toString();
@@ -181,8 +150,8 @@ public class MainActivity extends Activity {
         // 값을 설정하기 위한 데이터 객체 생성
         Map<String, Object> data = new HashMap<>();
         data.put("roomNumber", key);
-        data.put("xCoordinate", xCoordinate);
-        data.put("yCoordinate", yCoordinate);
+        data.put("X", xCoordinate);
+        data.put("Y", yCoordinate);
 
         // Wi-Fi 리스트 데이터 추가
         for (ScanResult result : wifiList) {
@@ -206,20 +175,4 @@ public class MainActivity extends Activity {
                 });
     }
 
-    private void uploadWiFiListToFirestore(DocumentReference documentRef, List<ScanResult> wifiList) {
-        CollectionReference wifiCollectionRef = documentRef.collection("wifiList");
-
-        for (ScanResult result : wifiList) {
-            String rssi = String.valueOf(result.level);
-            String bssid = result.BSSID;
-            String ssid = result.SSID;
-
-            Map<String, Object> wifiData = new HashMap<>();
-            wifiData.put("ssid", ssid);
-            wifiData.put("bssid", bssid);
-            wifiData.put("rssi", rssi);
-
-            wifiCollectionRef.document(ssid).set(wifiData);
-        }
-    }
 }
