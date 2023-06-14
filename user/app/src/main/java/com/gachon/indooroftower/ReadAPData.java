@@ -150,7 +150,7 @@ import org.apache.commons.csv.CSVRecord;
 public class ReadAPData {
 
     public static void main(String[] args) {
-        String csvFilePath = "/path/to/AP_c.csv";  // Replace with your CSV file path
+        String csvFilePath = "../assets/AP.csv";  // Replace with your CSV file path
 
         try (FileReader fileReader = new FileReader(csvFilePath);
              CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(fileReader)) {
@@ -180,9 +180,10 @@ public class ReadAPData {
     }
 }
 
-public class KNNLocationFinder {
+class KNNLocationFinder {
 
     public static void main(String[] args) throws Exception {
+        String rpFile = "../assets/RP.csv";
         // Reference point data
         Map<String, Map<String, Double>> referencePoints = new HashMap<>();
         referencePoints.put("RP1", createAPData(1, 2, -60, -70, -80));
@@ -205,7 +206,7 @@ public class KNNLocationFinder {
         Attribute classAttribute = new Attribute("class", classes);
         attributes.add(classAttribute);
 
-        Instances dataset = new Instances("LocationData", attributes, referencePoints.size());
+        Instances dataset = new Instances("LocationData", (ArrayList<Attribute>) attributes, referencePoints.size());
         dataset.setClass(classAttribute);
 
         for (Map.Entry<String, Map<String, Double>> rp : referencePoints.entrySet()) {
